@@ -24,7 +24,7 @@ class FoodApi extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
