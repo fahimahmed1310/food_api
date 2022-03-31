@@ -6,6 +6,7 @@ import 'package:food_api/repository/food_repository.dart';
 class FoodProvider with ChangeNotifier{
   bool? _isUserExist = false;
   CategoryModel? _categoryModel;
+  bool? _isLoading = true;
 
   Future<bool> isUserLogin(String phoneNumber, String password)async{
     Response response = await FoodRepository().isUserLogin(phoneNumber, password);
@@ -24,11 +25,13 @@ class FoodProvider with ChangeNotifier{
     Response response = await FoodRepository().foodCategory();
     if(response.statusCode == 200){
      _categoryModel = CategoryModel.fromJson(response.data);
-     print("done");
+     _isLoading = true;
     }
     else{
       print("Not found");
+      _isLoading = false;
     }
+    notifyListeners();
   }
 
 
@@ -43,5 +46,10 @@ class FoodProvider with ChangeNotifier{
 
   CategoryModel get categoryModel => _categoryModel!;
 
+  bool get isLoading => _isLoading!;
 
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
 }
